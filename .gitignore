@@ -1,0 +1,75 @@
+# Java build output
+/target/
+/out/
+
+# Maven / Gradle related files
+/.mvn/
+/.gradle/
+/build/
+
+# Logs
+*.log
+/logs/
+/*.log
+*.pid
+*.pid.lock
+
+# IntelliJ IDEA / WebStorm / PyCharm settings
+/.idea/
+/*.iml
+
+# Eclipse IDE settings
+/.project
+/.classpath
+/.settings/
+/.loadpath
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Generated files
+/*.class
+/*.war
+/*.jar
+
+# Spring Boot files
+/*.env
+/*.properties
+
+# Database files
+/h2-console/**
+
+# Docker-related files
+docker-compose.override.yml
+.env
+**/Dockerfile
+**/docker-compose.yml
+
+# Temp files
+*.swp
+*~
+*.tmp
+
+
+# Other package managers
+*.lock
+
+# Miscellaneous
+*.bak
+*.orig
+*.rej
+*.swo
+*.swp
+*.zip
+*.tar
+*.gz
+*.7z
+
+# Test coverage output
+/coverage/
+*.lcov
+
+# IDEA specific
+.idea/
+*.iml
