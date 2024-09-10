@@ -1,16 +1,17 @@
-services:
+version: '3.8'
 
-  postgres:
+services:
+  postgresql:
     container_name: ms_pg_sql
     image: postgres
     environment:
       POSTGRES_USER: dragand
       POSTGRES_PASSWORD: root
-      PGDATA: /var/lib/postgresql/data
+      PGDATA: /data/postgres
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - postgres:/data/postgres
     ports:
-      - 5432:5432
+      - "5432:5432"
     networks:
       - microservices-net
     restart: unless-stopped
@@ -19,45 +20,45 @@ services:
     container_name: ms_pgadmin
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin@pgadmin.org}
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
       PGADMIN_CONFIG_SERVER_MODE: 'False'
     volumes:
       - pgadmin:/var/lib/pgadmin
     ports:
-      - 5050:80
+      - "5050:80"
     networks:
       - microservices-net
     restart: unless-stopped
 
   mongodb:
-    container_name: ms_mongo_db
     image: mongo
+    container_name: mongo_db
     ports:
-      - 27017:27017
+      - "27017:27017"
     volumes:
       - mongo:/data
     environment:
-      MONGO_INITDB_USERNAME: dragand
-      MONGO_INITDB_PASSWORD: root
+      - MONGO_INITDB_ROOT_USERNAME=dragand
+      - MONGO_INITDB_ROOT_PASSWORD=root
 
   mongo-express:
-    container_name: ms_mongo_express
     image: mongo-express
+    container_name: mongo_express
     restart: always
     ports:
-      - 8081:8081
+      - "8081:8081"
     environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=dragand
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
-      - ME_CONFIG_MONGODB_ADMINSERVER=mongodb
+      ME_CONFIG_MONGODB_ADMINUSERNAME: dragand
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://dragand:root@mongodb:27017/
 
   mail-dev:
-    container_name: ms_mail_dev
+    container_name: ms-mail-dev
     image: maildev/maildev
     ports:
-      - 1080:1080
-      - 1025:1025
+      - "1080:1080"
+      - "1025:1025"
 
 networks:
   microservices-net:
@@ -67,6 +68,3 @@ volumes:
   postgres:
   pgadmin:
   mongo:
-
-
-
