@@ -11,7 +11,7 @@ services:
     volumes:
       - postgres:/data/postgres
     ports:
-      - "5432:5432"
+      - "1234:5432"
     networks:
       - microservices-net
     restart: unless-stopped
