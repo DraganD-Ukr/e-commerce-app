@@ -1,6 +1,6 @@
 create table if not exists category(
 
-    id integer not null primary key,
+    id serial primary key,
     name varchar(255),
     description varchar(255)
 
@@ -9,7 +9,7 @@ create table if not exists category(
 
 create table if not exists product (
 
-   id integer not null primary key,
+   id serial primary key,
    name varchar(255),
    description varchar(255),
    available_quantity double precision not null,
