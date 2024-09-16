@@ -3,6 +3,8 @@ package com.dragand.order.order.service;
 import com.dragand.order.customer.CustomerClient;
 import com.dragand.order.customer.ProductClient;
 import com.dragand.order.exception.CustomerNotFoundException;
+import com.dragand.order.kafka.OrderConfirmation;
+import com.dragand.order.kafka.OrderProducer;
 import com.dragand.order.order.dto.OrderMapper;
 import com.dragand.order.order.dto.OrderRequest;
 import com.dragand.order.order.repository.OrderRepository;
@@ -21,6 +23,7 @@ public class OrderService {
     private final ProductClient productClient;
     private final OrderMapper mapper;
     private final OrderLineService orderLineService;
+    private final OrderProducer orderProducer;
 
     public Integer createOrder(OrderRequest request) {
 
@@ -29,7 +32,7 @@ public class OrderService {
                 .orElseThrow(() -> new CustomerNotFoundException("Cannot create order: No customer exists with id:" + request.customerId()));
 
 //        Purchase the product --> product-service
-        this.productClient.purchaseProducts(request.products());
+        var purchasedProducts = this.productClient.purchaseProducts(request.products());
 
 //        Persist order
         var order = this.orderRepository.save(mapper.toOrder(request));
@@ -50,8 +53,16 @@ public class OrderService {
 
 
 //        Send the order confirmation --> notification-service
-
-        return null;
+        orderProducer.sendOrderConfirmation(
+                new OrderConfirmation(
+                        request.reference(),
+                        request.amount(),
+                        request.paymentMethod(),
+                        customer,
+                        purchasedProducts
+                ));
+        return order.getId();
     }
+
 
 }
