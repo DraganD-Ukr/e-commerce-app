@@ -23,6 +23,7 @@ public class OrderService {
     private final OrderLineService orderLineService;
 
     public Integer createOrder(OrderRequest request) {
+
 //        Check the customer --> OpenFeign
         var customer = this.customerClient.findCustomerById(request.customerId())
                 .orElseThrow(() -> new CustomerNotFoundException("Cannot create order: No customer exists with id:" + request.customerId()));
@@ -34,7 +35,7 @@ public class OrderService {
         var order = this.orderRepository.save(mapper.toOrder(request));
 
 //        Persist order lines
-        for (PurchaseRequest purchaseRequest: request.products()){
+        for (PurchaseRequest purchaseRequest : request.products()){
             orderLineService.saveOrderLine(
                     new OrderLineRequest(
                             null,
