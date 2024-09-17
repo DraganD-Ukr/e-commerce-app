@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.dragand</groupId>
-	<artifactId>order</artifactId>
+	<artifactId>payment</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>order</name>
-	<description>order</description>
+	<name>payment</name>
+	<description>payment</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -52,8 +52,8 @@
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
 		</dependency>
 
 		<dependency>
@@ -71,12 +71,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
-			<artifactId>spring-kafka</artifactId>
+			<artifactId>spring-kafka-test</artifactId>
+			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
