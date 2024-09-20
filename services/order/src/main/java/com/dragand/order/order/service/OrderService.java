@@ -11,6 +11,8 @@ import com.dragand.order.order.dto.OrderResponse;
 import com.dragand.order.order.repository.OrderRepository;
 import com.dragand.order.orderline.dto.OrderLineRequest;
 import com.dragand.order.orderline.service.OrderLineService;
+import com.dragand.order.payment.PaymentClient;
+import com.dragand.order.payment.dto.PaymentRequest;
 import com.dragand.order.product.dto.PurchaseRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -29,17 +31,18 @@ public class OrderService {
     private final OrderMapper mapper;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     public Integer createOrder(OrderRequest request) {
 
-//        Check the customer --> OpenFeign
+//        Check the customer --> OpenFeign(customer service)
         var customer = this.customerClient.findCustomerById(request.customerId())
                 .orElseThrow(() -> new CustomerNotFoundException("Cannot create order: No customer exists with id:" + request.customerId()));
 
-//        Purchase the product --> product-service
+//        Purchase the product --> OpenFeign(product-service)
         var purchasedProducts = this.productClient.purchaseProducts(request.products());
 
-//        Persist order
+//        Save order
         var order = this.orderRepository.save(mapper.toOrder(request));
 
 //        Persist order lines
@@ -54,7 +57,15 @@ public class OrderService {
             );
         }
 
-//      todo  Start payment process
+//       Start payment process
+        var paymentRequest = new PaymentRequest(
+                request.amount(),
+                request.paymentMethod(),
+                order.getId(),
+                order.getReference(),
+                customer
+        );
+        paymentClient.requestPayment(paymentRequest);
 
 
 //        Send the order confirmation --> notification-service
