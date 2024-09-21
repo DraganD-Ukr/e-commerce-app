@@ -23,7 +23,8 @@ import static jakarta.persistence.EnumType.*;
 public class Order {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
+    @SequenceGenerator(name = "order_seq", sequenceName = "customer_order_seq", allocationSize = 1)
     private Integer id;
     private String reference;
     private BigDecimal totalAmount;

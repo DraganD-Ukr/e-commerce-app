@@ -13,7 +13,8 @@ import lombok.*;
 public class OrderLine {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_line_seq")
+    @SequenceGenerator(name = "order_line_seq", sequenceName = "order_line_seq", allocationSize = 1)
     private Integer id;
     @ManyToOne
     @JoinColumn(name = "order_id")
