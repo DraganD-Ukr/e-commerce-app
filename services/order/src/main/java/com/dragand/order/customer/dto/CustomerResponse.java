@@ -1,4 +1,4 @@
-package com.dragand.order.customer;
+package com.dragand.order.customer.dto;
 
 public record CustomerResponse(
         String id,

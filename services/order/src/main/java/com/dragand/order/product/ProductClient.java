@@ -1,10 +1,9 @@
-package com.dragand.order.customer;
+package com.dragand.order.product;
 
 
 import com.dragand.order.product.dto.PurchaseRequest;
 import com.dragand.order.product.dto.PurchaseResponse;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 

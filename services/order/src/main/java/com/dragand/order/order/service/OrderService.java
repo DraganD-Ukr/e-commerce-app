@@ -1,7 +1,7 @@
 package com.dragand.order.order.service;
 
 import com.dragand.order.customer.CustomerClient;
-import com.dragand.order.customer.ProductClient;
+import com.dragand.order.product.ProductClient;
 import com.dragand.order.exception.CustomerNotFoundException;
 import com.dragand.order.kafka.OrderConfirmation;
 import com.dragand.order.kafka.OrderProducer;

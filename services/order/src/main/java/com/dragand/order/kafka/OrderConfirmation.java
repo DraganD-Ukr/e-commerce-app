@@ -1,6 +1,6 @@
 package com.dragand.order.kafka;
 
-import com.dragand.order.customer.CustomerResponse;
+import com.dragand.order.customer.dto.CustomerResponse;
 import com.dragand.order.order.model.PaymentMethod;
 import com.dragand.order.product.dto.PurchaseResponse;
 
