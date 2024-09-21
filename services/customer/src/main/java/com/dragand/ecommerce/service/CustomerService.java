@@ -73,6 +73,9 @@ public class CustomerService {
     }
 
     public void deleteCustomer(String customerId) {
+        if (!customerRepository.existsById(customerId)) {
+            throw new CustomerNotFoundException("Customer with ID " + customerId + " not found");
+        }
         customerRepository.deleteById(customerId);
     }
 }
