@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgresql:
     container_name: ms_pg_sql
@@ -91,6 +89,15 @@ services:
     ports:
       - "1080:1080"
       - "1025:1025"
+
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - microservices-net
+
 
 networks:
   microservices-net:
